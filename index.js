@@ -7,24 +7,30 @@ const flyingGif = ['/flying1.gif', '/flying2.gif',
   '/flying9.gif', '/flying10.gif',
   '/flying11.gif'];
 
-const width = 200;
+const width = 500;
 const screenWidth = $(window).width();
 let margin;
 let duration;
 let imgNum;
+let timeBetweenImages;
 
-function generateRandomMargin() {
-  const num = Math.floor(Math.random() * 580);
+function generateRandomMargin(milliseconds) {
+  const num = Math.floor(Math.random() * milliseconds);
   return num;
 }
 
-function generateRandomDuration() {
-  const num = (Math.floor(Math.random() * 20000)) + 15000;
+function generateRandomDuration(millisecDynamic, millisecStatic) {
+  const num = (Math.floor(Math.random() * millisecDynamic)) + millisecStatic;
   return num;
 }
 
-function chooseRandomGif() {
-  const num = (Math.floor(Math.random() * 11));
+function chooseRandomGif(numOfGifs) {
+  const num = (Math.floor(Math.random() * numOfGifs));
+  return num;
+}
+
+function timeBetween(range, i) {
+  const num = Math.floor(Math.random() * range) * i;
   return num;
 }
 
@@ -34,12 +40,17 @@ function setImgDivAttributes(imgDiv) {
   imgDiv.attr('left', '-100px');
   imgDiv.appendTo('.flyYouFools');
 }
-
-function defineRandomVariables() {
-  margin = generateRandomMargin();
-  duration = generateRandomDuration();
-  imgNum = chooseRandomGif();
+// Edit variables within these two comments to change height, duration,
+// git numbers, and how many gifs should be used (probably don't change i)
+function defineRandomVariables(i) {
+  margin = generateRandomMargin(580);
+  duration = generateRandomDuration(10000, 10000);
+  imgNum = chooseRandomGif(flyingGif.length);
+  timeBetweenImages = timeBetween(70, i);
 }
+const howManyImages = 75;
+// Edit variables within these two comment to change height, duration,
+// git numbers, and how many gifs should be used (probably don't change i)
 
 function putImagesIn(i) {
   return () => {
@@ -49,16 +60,17 @@ function putImagesIn(i) {
     $(`.dinosaur${i}`).css({
       'margin-top': `${margin}px`,
     });
-    imgDiv.css('right', (-width)).animate({
-      left: screenWidth + 2000,
+    imgDiv.css('left', (-width)).animate({
+      left: screenWidth + 3000,
       bottom: '+=70',
     }, duration);
   };
 }
 
 function loopThroughImages() {
-  for (let i = 0; i < 75; i += 1) {
-    setTimeout(putImagesIn(i), Math.floor(Math.random() * 70) * i * 3);
+  for (let i = 0; i < howManyImages; i += 1) {
+    defineRandomVariables(i);
+    setTimeout(putImagesIn(i), timeBetweenImages);
   }
 }
 
