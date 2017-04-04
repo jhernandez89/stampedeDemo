@@ -5,11 +5,17 @@ const flyingGif = ['/flying1.gif', '/flying2.gif',
   '/flying5.gif', '/flying6.gif',
   '/flying7.gif', '/flying8.gif',
   '/flying9.gif', '/flying10.gif',
-  '/flying11.gif'];
+  '/flying11.gif', '/flying12.gif',
+  '/flying13.gif', '/flying14.gif',
+  '/flying15.gif', '/flying16.gif',
+  '/flying17.gif', '/flying18.gif',
+  '/flying19.gif', '/flying20.gif',
+  '/flying21.gif',
+];
 
 const width = 500;
 const screenWidth = $(window).width();
-let margin;
+let margin_top;
 let duration;
 let imgNum;
 let timeBetweenImages;
@@ -36,14 +42,15 @@ function timeBetween(range, i) {
 
 function setImgDivAttributes(imgDiv) {
   imgDiv.attr('src', `images/${flyingGif[imgNum]}`);
-  imgDiv.attr('height', '40px');
+  imgDiv.attr('height', '75px');
+  imgDiv.attr('width', 'auto')
   imgDiv.attr('left', '-100px');
   imgDiv.appendTo('.flyYouFools');
 }
 // Edit variables within these two comments to change height, duration,
 // git numbers, and how many gifs should be used (probably don't change i)
 function defineRandomVariables(i) {
-  margin = generateRandomMargin(580);
+  margin_top = generateRandomMargin(580);
   duration = generateRandomDuration(10000, 10000);
   imgNum = chooseRandomGif(flyingGif.length);
   timeBetweenImages = timeBetween(70, i);
@@ -55,14 +62,13 @@ const howManyImages = 75;
 function putImagesIn(i) {
   return () => {
     defineRandomVariables();
-    const imgDiv = $(`<img id=flyingAnimal class=dinosaur${i}>`);
+    const imgDiv = $(`<img id=flyingAnimal class=flying${i}>`);
     setImgDivAttributes(imgDiv);
-    $(`.dinosaur${i}`).css({
-      'margin-top': `${margin}px`,
+    $(`.flying${i}`).css({
+      'margin-top': `${margin_top}px`,
     });
     imgDiv.css('left', (-width)).animate({
       left: screenWidth + 3000,
-      bottom: '+=70',
     }, duration);
   };
 }
