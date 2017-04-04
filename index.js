@@ -20,7 +20,7 @@ are all different) */
 const screenWidth = $(window).width();
 
 /* global variables for randomly generated numbers */
-let margin_top;
+let marginTop;
 let duration;
 let imgNum;
 let timeBetweenImages;
@@ -56,8 +56,8 @@ function timeBetween(range, i) {
 
 function setImgDivAttributes(imgDiv) {
   imgDiv.attr('src', `images/${flyingGif[imgNum]}`);
-  imgDiv.attr('height', '75px');
-  imgDiv.attr('width', 'auto')
+  imgDiv.attr('width', '90px');
+  imgDiv.attr('height', 'auto');
   imgDiv.attr('left', '-100px');
   imgDiv.appendTo('.flyYouFools');
 }
@@ -72,7 +72,7 @@ number
 would be randomly generated between 5000 and 12000 miliseconds)
 */
 function defineRandomVariables(i) {
-  margin_top = generateRandomMargin(580);
+  marginTop = generateRandomMargin(580);
   duration = generateRandomDuration(10000, 10000);
   imgNum = chooseRandomGif(flyingGif.length);
   timeBetweenImages = timeBetween(70, i);
@@ -83,26 +83,25 @@ git numbers, and how many gifs should be used (probably don't change i) */
 
 function putImagesIn(i) {
   return () => {
-    //defineRandomVariables defines random variables
-    console.log(i);
-    defineRandomVariables(i)
+    /* defineRandomVariables defines random variables */
+    defineRandomVariables(i);
 
-    //imgDiv is what all the gif divs are made out of, it appends it to the
-    //parent div "flyYouFools" a number of times equal to the variable
-    //"howManyImages" using the for loop in the function "loopThroughImages"
+    /* imgDiv is what all the gif divs are made out of, it appends it to the
+    parent div "flyYouFools" a number of times equal to the variable
+    "howManyImages" using the for loop in the function "loopThroughImages" */
     const imgDiv = $(`<img id=flyingAnimal class=flying${i}>`);
 
-    //This defines the imgDiv attributes.  It could be done in this function,
-    //but for readability it's done in it's own function
+    /* This defines the imgDiv attributes.  It could be done in this function,
+    but for readability it's done in it's own function */
     setImgDivAttributes(imgDiv);
 
-    //Margin top determines what position the gif will be on the
-    //vertical axis
+    /* Margin top determines what position the gif will be on the
+    vertical axis */
     $(`.flying${i}`).css({
-      'margin-top': `${margin_top}px`,
+      'margin-top': `${marginTop}px`,
     });
 
-    //These next three lines are where the images actually get animated
+    /* These next three lines are where the images actually get animated */
     imgDiv.css('left', (-width)).animate({
       left: screenWidth + 3000,
     }, duration);
@@ -111,7 +110,6 @@ function putImagesIn(i) {
 
 function loopThroughImages() {
   for (let i = 0; i < howManyImages; i += 1) {
-    console.log(i);
     defineRandomVariables(i);
 
     /* setTimeout determines how long the computer will wait before placing
@@ -121,9 +119,8 @@ function loopThroughImages() {
 }
 
 $('.stampede').click(() => {
-
   loopThroughImages();
-  //This empty function empties the parent div so if a user clicks a button
-  //multiple times, the gifs won't keep building up
+  /* This empty function empties the parent div so if a user clicks a button
+  multiple times, the gifs won't keep building up */
   $('.flyYouFools').empty();
 });
